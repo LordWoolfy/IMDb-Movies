@@ -1,3 +1,6 @@
+from pyspark.sql.types import *
+from pyspark.sql.functions import udf
+
 def cleanse(path,columns,x):
   """This function cleanses data. For 'path' you should insert the path to the file you want.
   For 'columns' insert the columns as a list ['abc','dfe'] you want deleted from the Data Frame.
