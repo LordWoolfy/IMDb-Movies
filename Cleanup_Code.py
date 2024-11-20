@@ -1,10 +1,11 @@
 from pyspark.sql.types import *
 from pyspark.sql.functions import udf
 
-def cleanse(path,columns,x):
+def cleanse(path,columns,x, spark):
   """This function cleanses data. For 'path' you should insert the path to the file you want.
   For 'columns' insert the columns as a list ['abc','dfe'] you want deleted from the Data Frame.
-  x is for which schema is used for the csv file. 0 for Movies, 1 for Names, 2 for Ratings, 3 for Title principals"""
+  x is for which schema is used for the csv file. 0 for Movies, 1 for Names, 2 for Ratings, 3 for Title principals
+  spark is for the general spark object"""
   schemas = [StructType([
         StructField("imdb_title_id", StringType(), True),
         StructField("title", StringType(), True),
