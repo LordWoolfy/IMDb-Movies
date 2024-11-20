@@ -1,5 +1,8 @@
 from pyspark.sql.types import *
 from pyspark.sql.functions import udf
+from pyspark.sql import SparkSession, SQLContext
+spark = SparkSession.builder.getOrCreate()
+
 
 def cleanse(path,columns,x):
   """This function cleanses data. For 'path' you should insert the path to the file you want.
