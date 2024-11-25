@@ -54,7 +54,7 @@ def cleanse(path,columns,x):
         StructField("weighted_average_vote", FloatType(), True),
         StructField("total_votes", IntegerType(), True),
         StructField("mean_vote", FloatType(), True),
-        StructField("median_vote", IntegerType(), True),
+        StructField("median_vote", FloatType(), True),
         StructField("votes_10", IntegerType(), True),
         StructField("votes_9", IntegerType(), True),
         StructField("votes_8", IntegerType(), True),
