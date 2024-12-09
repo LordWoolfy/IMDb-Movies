@@ -78,7 +78,8 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
           continue
         genre_condition = array_contains(col("genre"), value[0])
         for genre in value[1:]:
-          genre_condition = genre_condition | array_contains(col("genre"), genre)
+          if genre != None:
+              genre_condition = genre_condition | array_contains(col("genre"), genre)
         filtered_movies = filtered_movies.filter(genre_condition)
       # Filter dataset based on Not Genre
       elif key == 'Not Genre':
