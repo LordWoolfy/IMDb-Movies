@@ -111,7 +111,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
           continue
         company_condition = array_contains(col('production_company'), value[0])
         for company in value[1:]:
-          if company != None
+          if company != None:
             company_condition = company_condition | array_contains(col('production_company'), company)
         company_filter = filtered_movies.filter(company_condition)
         if company_filter.count() >= 10:
