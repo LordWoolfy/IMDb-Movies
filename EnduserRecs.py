@@ -132,9 +132,10 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
     ranked_movies = filtered_movies.orderBy(col('metascore').desc()).select(filtered_movies.original_title, filtered_movies.year)
   else:
     ranked_movies = filtered_movies.join(filtered_ratings, filtered_movies.imdb_title_id == filtered_ratings.imdb_title_id, 'inner')\
-    .orderBy(col(population_range).desc()).select(filtered_movies.imdb_title_id, filtered_movies.original_title, filtered_movies.year, filtered_movies.genre)
+    .orderBy(col(population_range).desc()).select(filtered_movies.imdb_title_id, filtered_movies.original_title, filtered_movies.year, filtered_movies.genre).limit(10)
   print('critic duty done')
-  ranked_class = ranked_movies.rdd.map(lambda x: x).take(10)
+  print(ranked_movies.show()
+  ranked_class = ranked_movies.rdd.map(lambda x: x).collect()
   ranked_list = []
   print(ranked_class)
   for row in ranked_class:
