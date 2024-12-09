@@ -126,7 +126,6 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
     .orderBy(col(population_range).desc()).select(filtered_movies.imdb_title_id, filtered_movies.original_title, filtered_movies.year, filtered_movies.genre).limit(10)
   ranked_class = ranked_movies.rdd.map(lambda x: x).collect()
   ranked_list = []
-  print(ranked_class)
   for row in ranked_class:
     ranked_list.append([row['imdb_title_id'], row['original_title'], row['year'], row['genre']])
   if len(ranked_list) == 0:
