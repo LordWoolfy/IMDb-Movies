@@ -128,7 +128,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
   ranked_class = ranked_movies.rdd.map(lambda x: x).take(10)
   ranked_list = []
   for row in ranked_class:
-    ranked_list.append([row['imdb_title_id'], row['original_title'], row['year'], row['genre']])
+    ranked_list.append([row['imdb_title_id'].astype(str), row['original_title'].astype(str), row['year'].astype(int), row['genre'].astype(str)])
   if len(ranked_list) == 0:
     ranked_list = ['No Movies Found']
   return ranked_list
