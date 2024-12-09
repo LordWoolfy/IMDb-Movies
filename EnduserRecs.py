@@ -171,3 +171,18 @@ def get_user_info(movies_dict):
                     'Country': movies_dict['Country'],
                     'Prefered Languages': movies_dict['Languages']}
   return user_info_dict
+
+def get_movies_ids(rec_results):
+  """
+  Returns a list of movie IDs based on recommended movies.
+
+  Args:
+  rec_results (list): List of recommended movies.
+
+  Returns:
+  list: List of movie IDs.
+  """
+ movies_list = []
+ for i in range(len(rec_results)):
+  movies_list.append(rec_results[i][0])
+ return movies_list
