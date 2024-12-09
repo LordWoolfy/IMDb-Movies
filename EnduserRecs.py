@@ -1,6 +1,5 @@
 from pyspark.sql.functions import col, array_contains
 import datetime
-!pip install shortuuid
 import shortuuid
 
 def set_age_gender_range(age, gender):
