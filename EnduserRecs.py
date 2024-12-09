@@ -70,6 +70,9 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
               new_genres.remove(genre)
         for genre in new_genres:
           if genre not in input_dict['Genres']:
+            if input_dict['Genres'] == [None]:
+              input_dict['Genres'] = [genre]
+            else:
               input_dict['Genres'].append(genre)
         filtered_movies = filtered_movies.filter(~filtered_movies.original_title.isin(value))
       # Filter dataset based on Genre
