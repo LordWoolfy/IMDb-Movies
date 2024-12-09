@@ -15,7 +15,7 @@ def set_age_gender_range(age, gender):
   """
   population_type = 'mean_vote'
   if age is None and gender in ('M', 'F'):
-    population_type = f"{'males' if gender == 'M' else 'females'}_avg_vote"
+    population_type = f"{'males' if gender == 'M' else 'females'}allages_avg_vote"
   elif age is None and gender is None:
     population_type = "weighted_average_vote"
   elif 0 < age < 18:
