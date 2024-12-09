@@ -86,14 +86,16 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         if value == [None]:
           continue
         for genre in value:
-          filtered_movies = filtered_movies.filter(~array_contains(col("genre"), genre))
+          if genre != None
+            filtered_movies = filtered_movies.filter(~array_contains(col("genre"), genre))
       # Filter dataset based on spoken language
       elif key == 'Languages':
         if value == [None]:
           continue
         language_condition = array_contains(col("language"), value[0])
         for language in value[1:]:
-          language_condition = language_condition | array_contains(col("language"), language)
+          if language != None:
+            language_condition = language_condition | array_contains(col("language"), language)
         filtered_movies = filtered_movies.filter(language_condition)
       # Filter dataset based on actors, directors, producers, etc.
       elif key == 'Names':
@@ -109,7 +111,8 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
           continue
         company_condition = array_contains(col('production_company'), value[0])
         for company in value[1:]:
-          company_condition = company_condition | array_contains(col('production_company'), company)
+          if company != None
+            company_condition = company_condition | array_contains(col('production_company'), company)
         company_filter = filtered_movies.filter(company_condition)
         if company_filter.count() >= 10:
           filtered_movies = company_filter
