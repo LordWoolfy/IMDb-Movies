@@ -182,7 +182,7 @@ def get_movies_ids(rec_results):
   Returns:
   list: List of movie IDs.
   """
-   movies_list = []
-   for i in range(len(rec_results)):
+  movies_list = []
+  for i in range(len(rec_results)):
     movies_list.append(rec_results[i][0])
-   return movies_list
+  return movies_list
