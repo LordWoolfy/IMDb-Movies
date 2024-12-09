@@ -40,6 +40,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
   Returns:
   list: Ranked list of recommended movies.
   """
+  print('start get_recs')
   movies_df, names_df, ratings_df, title_principals_df = datasets
 
   filtered_movies = movies_df
@@ -48,7 +49,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
 
   if movies_list != [None]:
     filtered_movies = filtered_movies.filter(~filtered_movies.imdb_title_id.isin(movies_list))
-
+    print('removed previous recs')
   for key, value in input_dict.items():
     if value != None or value != '' or value != []:
       if key == 'Years':
@@ -73,6 +74,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
           if genre not in input_dict['Genres']:
               input_dict['Genres'].append(genre)
         filtered_movies = filtered_movies.filter(~filtered_movies.original_title.isin(value))
+        print('done movie duty')
       # Filter dataset based on Genre
       elif key == 'Genres':
         if value == [None]:
@@ -81,12 +83,14 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         for genre in value[1:]:
           genre_condition = genre_condition | array_contains(col("genre"), genre)
         filtered_movies = filtered_movies.filter(genre_condition)
+        print('genres duty done')
       # Filter dataset based on Not Genre
       elif key == 'Not Genre':
         if value == [None]:
           continue
         for genre in value:
           filtered_movies = filtered_movies.filter(~array_contains(col("genre"), genre))
+          print('not genre duty done')
       # Filter dataset based on spoken language
       elif key == 'Languages':
         if value == [None]:
@@ -95,6 +99,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         for language in value[1:]:
           language_condition = language_condition | array_contains(col("language"), language)
         filtered_movies = filtered_movies.filter(language_condition)
+        print('language duty done')
       # Filter dataset based on actors, directors, producers, etc.
       elif key == 'Names':
         if value == [None]:
@@ -103,6 +108,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         name_filter = name_filter.join(names_df, name_filter.imdb_name_id == names_df.imdb_name_id, 'inner').filter(names_df.name.isin(value) | names_df.birth_name.isin(value)).drop(names_df["imdb_name_id"])
         if name_filter.count() >= 10:
           filtered_movies = name_filter
+        print('names duty done')
       # Filter dataset based on production companies
       elif key == 'Production Companies':
         if value == [None]:
@@ -113,9 +119,11 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         company_filter = filtered_movies.filter(company_condition)
         if company_filter.count() >= 10:
           filtered_movies = company_filter
+        print('company duty done')
       # Filter dataset based on min rating
       elif key == 'Min Rating':
         filtered_movies = filtered_movies.filter(filtered_movies.avg_vote >= value)
+        print('rating duty done')
 
   filtered_ratings = ratings_df
   filtered_movies = filtered_movies.dropDuplicates()
@@ -125,10 +133,12 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
   else:
     ranked_movies = filtered_movies.join(filtered_ratings, filtered_movies.imdb_title_id == filtered_ratings.imdb_title_id, 'inner')\
     .orderBy(col(population_range).desc()).select(filtered_movies.imdb_title_id, filtered_movies.original_title, filtered_movies.year, filtered_movies.genre)
+  print('critic duty done')
   ranked_class = ranked_movies.rdd.map(lambda x: x).take(10)
   ranked_list = []
+  print(ranked_class)
   for row in ranked_class:
-    ranked_list.append([row['imdb_title_id'].astype(str), row['original_title'].astype(str), row['year'].astype(int), row['genre'].astype(str)])
+    ranked_list.append([row['imdb_title_id'], row['original_title'], row['year'], row['genre']])
   if len(ranked_list) == 0:
     ranked_list = ['No Movies Found']
   return ranked_list
