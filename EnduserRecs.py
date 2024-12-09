@@ -86,7 +86,7 @@ def get_recommendations(datasets, input_dict, movies_list = [None]):
         if value == [None]:
           continue
         for genre in value:
-          if genre != None
+          if genre != None:
             filtered_movies = filtered_movies.filter(~array_contains(col("genre"), genre))
       # Filter dataset based on spoken language
       elif key == 'Languages':
