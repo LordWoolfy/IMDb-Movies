@@ -147,7 +147,7 @@ def rate_rec(rating = 0):
   rating (int): Rating for the movie. 0, -1, 1, 2
 
   Returns:
-  str: Rating string. 'Not Rated', 'Disiked', 'Liked', or 'Loved'.
+  str: Rating string. 'Not Rated', 'Disliked', 'Liked', or 'Loved'.
   """
   rating_string = ''
   if rating == 0:
