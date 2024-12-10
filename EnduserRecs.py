@@ -153,7 +153,7 @@ def rate_rec(rating = 0):
   if rating == 0:
     rating_string = 'Not Rated'
   elif rating == -1:
-    rating_string = 'Disiked'
+    rating_string = 'Disliked'
   elif rating == 1:
     rating_string = 'Liked'
   elif rating == 2:
